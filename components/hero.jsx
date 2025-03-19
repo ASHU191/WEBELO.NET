@@ -1,8 +1,32 @@
 "use client"
 
 import { motion } from "framer-motion"
-import Image from "next/image"
 import { ArrowRight, ChevronDown } from "lucide-react"
+import { Canvas } from "@react-three/fiber"
+import { OrbitControls, useGLTF, Environment, Float } from "@react-three/drei"
+import { Suspense, useRef } from "react"
+
+function WebDevModel(props) {
+  const group = useRef()
+  // Using a laptop model to represent web development services
+  const { nodes, materials } = useGLTF("/assets/3d/duck.glb")
+
+  return (
+    <group ref={group} {...props} dispose={null}>
+      <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
+        <primitive object={nodes.Scene} scale={2.5} position={[0, -0.5, 0]} />
+      </Float>
+    </group>
+  )
+}
+
+function Loader() {
+  return (
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="h-16 w-16 animate-spin rounded-full border-b-2 border-t-2 border-cyan-500"></div>
+    </div>
+  )
+}
 
 export default function Hero() {
   const scrollToContact = (e) => {
@@ -158,24 +182,36 @@ export default function Hero() {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-gray-800/50 group">
+            <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-gray-800/50 group h-[500px]">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
-              <Image
-                src="/hero.jpg?height=600&width=600"
-                alt="Web Development"
-                width={600}
-                height={600}
-                className="w-full h-auto group-hover:scale-105 transition-transform duration-700"
-              />
 
-              {/* Floating elements */}
-              <div className="absolute top-4 right-4 bg-gray-900/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium border border-gray-700/50 flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                Live Project
+              {/* 3D Model Canvas */}
+              <div className="w-full h-full">
+                <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+                  <Suspense fallback={<Loader />}>
+                    <ambientLight intensity={0.5} />
+                    <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
+                    <WebDevModel />
+                    <Environment preset="city" />
+                    <OrbitControls
+                      enableZoom={false}
+                      autoRotate
+                      autoRotateSpeed={1}
+                      minPolarAngle={Math.PI / 3}
+                      maxPolarAngle={Math.PI / 1.5}
+                    />
+                  </Suspense>
+                </Canvas>
               </div>
 
-              <div className="absolute bottom-4 left-4 bg-gray-900/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium border border-gray-700/50">
-                React + Next.js
+              {/* Floating elements */}
+              <div className="absolute top-4 right-4 bg-gray-900/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium border border-gray-700/50 flex items-center gap-1 z-20">
+                <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                Interactive 3D
+              </div>
+
+              <div className="absolute bottom-4 left-4 bg-gray-900/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium border border-gray-700/50 z-20">
+                React + Three.js
               </div>
             </div>
 
@@ -185,7 +221,7 @@ export default function Hero() {
 
             {/* Code snippet */}
             <motion.div
-              className="absolute -bottom-6 -right-6 bg-gray-800/90 backdrop-blur-md p-4 rounded-lg shadow-xl border border-gray-700/50 max-w-[200px] hidden md:block"
+              className="absolute -bottom-6 -right-6 bg-gray-800/90 backdrop-blur-md p-4 rounded-lg shadow-xl border border-gray-700/50 max-w-[200px] hidden md:block z-20"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1, duration: 0.5 }}
