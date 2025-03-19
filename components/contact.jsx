@@ -1,4 +1,6 @@
-"use client"
+use
+client
+"
 
 import { motion } from "framer-motion"
 import { useState } from "react"
@@ -27,34 +29,54 @@ export default function Contact() {
     e.preventDefault()
     setFormStatus({ isSubmitting: true, isSubmitted: false, error: null })
 
+    // Format the message for email
+    const emailBody = `
+Name: ${formData.name}
+Email: ${formData.email}
+Subject: ${formData.subject}
+Message: ${formData.message}
+`.trim()
+
+    // Send email using mailto link
+    const mailtoUrl = `mailto:arsalanaftab191@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(emailBody)}`
+
+    // Open email client in a new tab
+    window.open(mailtoUrl, "_blank")
+
     // Format the message for WhatsApp
-    const whatsappMessage = `
-*Name:* ${formData.name}
-*Email:* ${formData.email}
-*Subject:* ${formData.subject}
-*Message:* ${formData.message}
-    `.trim()
+    const whatsappMessage = 
+*Name
+    :* $
+    formData.name
+    *Email:* $
+    formData.email
+    *Subject:* $
+    formData.subject
+    *Message:* $
+    formData.message
+    .trim()
 
     // Encode the message for URL
     const encodedMessage = encodeURIComponent(whatsappMessage)
 
     // WhatsApp API URL with phone number (without + or country code)
-    const whatsappUrl = `https://wa.me/923010209887?text=${encodedMessage}`
+    const whatsappUrl = https
+    ://wa.me/923010209887?text=${encodedMessage}
 
     // Simulate form processing delay
-    setTimeout(() => {
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      })
-      setFormStatus({ isSubmitting: false, isSubmitted: true, error: null })
+    setTimeout(() =>
+    // Reset form
+    setFormData({
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    })
+    setFormStatus({ isSubmitting: false, isSubmitted: true, error: null })
 
-      // Open WhatsApp in a new tab
-      window.open(whatsappUrl, "_blank")
-    }, 1000)
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, "_blank")
+    , 1000)
   }
 
   return (
