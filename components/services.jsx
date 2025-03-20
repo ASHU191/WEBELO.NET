@@ -125,7 +125,7 @@ export default function Services() {
   const renderServiceCard = (service, index) => (
     <motion.div
       key={index}
-      className="relative bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden group flex-shrink-0 w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-16px)] mx-2"
+      className="relative bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden group h-full"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -144,7 +144,7 @@ export default function Services() {
         ></div>
       </div>
 
-      <div className="relative p-10 bg-gray-800 rounded-xl h-full flex flex-col">
+      <div className="relative p-8 md:p-10 bg-gray-800 rounded-xl h-full flex flex-col">
         {/* Centered icon with color and animation */}
         <motion.div
           className="flex justify-center mb-8"
@@ -157,7 +157,7 @@ export default function Services() {
 
         {/* Content with staggered animation */}
         <motion.h3
-          className="text-2xl font-bold mb-4 text-center"
+          className="text-xl md:text-2xl font-bold mb-4 text-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.2 + index * 0.1 }}
@@ -231,11 +231,11 @@ export default function Services() {
         <div className="lg:hidden relative">
           <div
             ref={carouselRef}
-            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-2 pb-8"
+            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-8"
             style={{ WebkitOverflowScrolling: "touch" }}
           >
             {services.map((service, index) => (
-              <div key={index} className="snap-start w-full md:w-1/2 px-2">
+              <div key={index} className="snap-start w-full md:w-1/2 flex-shrink-0 px-4">
                 {renderServiceCard(service, index)}
               </div>
             ))}
@@ -271,7 +271,11 @@ export default function Services() {
 
         {/* Regular grid for desktop */}
         <div className="hidden lg:grid grid-cols-3 gap-8">
-          {services.map((service, index) => renderServiceCard(service, index))}
+          {services.map((service, index) => (
+            <div key={index} className="h-full">
+              {renderServiceCard(service, index)}
+            </div>
+          ))}
         </div>
       </div>
     </div>
