@@ -38,7 +38,7 @@ export default function About() {
             <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-gray-700/50 group">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
               <Image
-                src="/team.jpg?height=600&width=600"
+                src="/team2.jpg?height=600&width=600"
                 alt="About Us"
                 width={600}
                 height={600}
