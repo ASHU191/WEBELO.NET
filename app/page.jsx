@@ -10,7 +10,7 @@ import Projects from "@/components/projects"
 import Testimonials from "@/components/testimonials"
 import Contact from "@/components/contact"
 import Footer from "@/components/footer"
-import CustomCursor from "@/components/custom-cursor"
+// import CustomCursor from "@/components/custom-cursor"
 import AnimatedBackground from "@/components/animated-background"
 
 export default function Home() {
@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <div className="bg-gray-900 text-gray-100 min-h-screen overflow-x-hidden">
       <AnimatedBackground />
-      <CustomCursor />
+{/*       <CustomCursor /> */}
       <Navbar scrollY={scrollY} />
 
       <main>
